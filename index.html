@@ -1,42 +1,5 @@
 <!doctype html>
-<!--
-=====================================================================
-  دعوة زفاف إلكترونية / WEDDING INVITATION WEBSITE
-=====================================================================
-  كيفية التعديل / HOW TO EDIT:
 
-  1) الأسماء والنصوص: ابحث عن أي عنصر يحمل data-en="..." و data-ar="..."
-     وعدّل النص داخل علامتي الاقتباس مباشرة لكل لغة.
-     TEXT: find any element with data-en="..." and data-ar="..."
-     and edit the text inside the quotes for each language.
-
-  2) الموعد النهائي للعد التنازلي: عدّل data-datetime="YYYY-MM-DDTHH:MM:SS"
-     على وسم <section id="countdown"> — احرصوا على كتابة الشهر واليوم برقمين
-     دائمًا (مثال: 09 وليس 9) وإلا قد لا يعمل العد في بعض المتصفحات.
-     COUNTDOWN DATE: edit data-datetime="YYYY-MM-DDTHH:MM:SS" on the
-     <section id="countdown"> tag — always use 2-digit month/day
-     (e.g. 09, not 9) or the countdown may fail in some browsers.
-
-  3) عنوان مكان الحفل: عدّل data-address="..." على <div class="map">.
-     نفس العنوان يُستخدم تلقائيًا لكل من الخريطة المضمّنة ورابط
-     "احصلوا على الاتجاهات" أسفلها — لا حاجة لتعديل أي شيء آخر.
-     VENUE ADDRESS: edit data-address="..." on <div class="map">.
-     The same address automatically powers both the embedded map and
-     the "Get directions" link beneath it — nothing else to edit.
-
-  4) الصور: استبدلوا محتوى <div id="heroPhoto"> بوسم
-     <img src="your-photo.jpg" alt="Randa & Mohammad">.
-     PHOTOS: replace the contents of <div id="heroPhoto"> with
-     <img src="your-photo.jpg" alt="Randa & Mohammad">.
-
-  ملاحظة: قسم "رسالة للعروسين" غير موجود حاليًا في هذه النسخة. الموقع
-  يعمل بشكل كامل وسليم بدونه — إذا رغبتم بإعادته لاحقًا (عبر تلغرام أو
-  غيره) يمكن إضافته بسهولة.
-  NOTE: the "message to the couple" section isn't included in this
-  version. The site works fully and correctly without it — if you'd
-  like it back later (via Telegram or otherwise), it can be added easily.
-=====================================================================
--->
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
@@ -952,8 +915,7 @@
         setInterval(tick, 1000);
 
         // ---------- Maps + "Get directions" link ----------
-        // كلاهما يُبنى تلقائيًا من data-address في .map — عدّلوا العنوان هناك فقط
-        // Both are built automatically from data-address on .map — edit the address there only
+
         document.querySelectorAll(".map").forEach(function (box) {
           var addr = box.getAttribute("data-address");
 

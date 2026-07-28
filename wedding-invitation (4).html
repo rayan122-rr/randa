@@ -1,0 +1,1001 @@
+<!doctype html>
+<!--
+=====================================================================
+  دعوة زفاف إلكترونية / WEDDING INVITATION WEBSITE
+=====================================================================
+  كيفية التعديل / HOW TO EDIT:
+
+  1) الأسماء والنصوص: ابحث عن أي عنصر يحمل data-en="..." و data-ar="..."
+     وعدّل النص داخل علامتي الاقتباس مباشرة لكل لغة.
+     TEXT: find any element with data-en="..." and data-ar="..."
+     and edit the text inside the quotes for each language.
+
+  2) الموعد النهائي للعد التنازلي: عدّل data-datetime="YYYY-MM-DDTHH:MM:SS"
+     على وسم <section id="countdown"> — احرصوا على كتابة الشهر واليوم برقمين
+     دائمًا (مثال: 09 وليس 9) وإلا قد لا يعمل العد في بعض المتصفحات.
+     COUNTDOWN DATE: edit data-datetime="YYYY-MM-DDTHH:MM:SS" on the
+     <section id="countdown"> tag — always use 2-digit month/day
+     (e.g. 09, not 9) or the countdown may fail in some browsers.
+
+  3) عنوان مكان الحفل: عدّل data-address="..." على <div class="map">.
+     نفس العنوان يُستخدم تلقائيًا لكل من الخريطة المضمّنة ورابط
+     "احصلوا على الاتجاهات" أسفلها — لا حاجة لتعديل أي شيء آخر.
+     VENUE ADDRESS: edit data-address="..." on <div class="map">.
+     The same address automatically powers both the embedded map and
+     the "Get directions" link beneath it — nothing else to edit.
+
+  4) الصور: استبدلوا محتوى <div id="heroPhoto"> بوسم
+     <img src="your-photo.jpg" alt="Randa & Mohammad">.
+     PHOTOS: replace the contents of <div id="heroPhoto"> with
+     <img src="your-photo.jpg" alt="Randa & Mohammad">.
+
+  ملاحظة: قسم "رسالة للعروسين" غير موجود حاليًا في هذه النسخة. الموقع
+  يعمل بشكل كامل وسليم بدونه — إذا رغبتم بإعادته لاحقًا (عبر تلغرام أو
+  غيره) يمكن إضافته بسهولة.
+  NOTE: the "message to the couple" section isn't included in this
+  version. The site works fully and correctly without it — if you'd
+  like it back later (via Telegram or otherwise), it can be added easily.
+=====================================================================
+-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Randa &amp; Mohammad | رندة ومحمد</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg: #faf7f2;
+        --bg-soft: #f1e7dc;
+        --surface: #ffffff;
+        --text: #2a1a1d;
+        --text-soft: #6b4c4f;
+        --accent: #7c2735;
+        --accent-soft: #b0495a;
+        --gold: #b08d57;
+        --line: rgba(42, 26, 29, 0.16);
+        --shadow: 0 10px 40px rgba(42, 26, 29, 0.08);
+        --radius: 12px;
+      }
+      html[data-theme="dark"] {
+        --bg: #17100f;
+        --bg-soft: #211719;
+        --surface: #1d1517;
+        --text: #f5e9e4;
+        --text-soft: #c9a8a9;
+        --accent: #e39199;
+        --accent-soft: #c96b7a;
+        --gold: #d9bd86;
+        --line: rgba(245, 233, 228, 0.14);
+        --shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        font-size: 18px;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Jost", sans-serif;
+        font-weight: 300;
+        transition:
+          background 0.4s ease,
+          color 0.4s ease;
+        overflow-x: hidden;
+      }
+      html[lang="ar"] body {
+        font-family: "Tajawal", sans-serif;
+      }
+
+      .disp {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 500;
+      }
+      html[lang="ar"] .disp {
+        font-family: "Aref Ruqaa", serif;
+        font-weight: 700;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      section {
+        position: relative;
+        padding: 100px 24px;
+      }
+      .wrap {
+        max-width: 920px;
+        margin: 0 auto;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      /* ---------- TOP BAR ---------- */
+      .topbar {
+        position: fixed;
+        top: 0;
+        inset-inline: 0;
+        z-index: 50;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 28px;
+        backdrop-filter: blur(8px);
+        background: color-mix(in srgb, var(--bg) 78%, transparent);
+        border-bottom: 1px solid var(--line);
+      }
+      .brand {
+        font-family: "Cormorant Garamond", serif;
+        letter-spacing: 0.08em;
+        font-size: 1.1rem;
+      }
+      html[lang="ar"] .brand {
+        font-family: "Aref Ruqaa", serif;
+      }
+      .controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .ctrl-btn {
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.78rem;
+        letter-spacing: 0.05em;
+        padding: 8px 14px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition:
+          border-color 0.25s,
+          color 0.25s,
+          background 0.25s;
+      }
+      .ctrl-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* ---------- HERO ---------- */
+      @keyframes heroIn {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .hero-anim {
+        opacity: 0;
+        animation: heroIn 0.9s cubic-bezier(0.16, 0.8, 0.3, 1) forwards;
+      }
+      .hero .vine-top.hero-anim {
+        animation-delay: 0.05s;
+      }
+      .hero-photo.hero-anim {
+        animation-delay: 0.2s;
+      }
+      .hero .eyebrow.hero-anim {
+        animation-delay: 0.35s;
+      }
+      .hero h1.hero-anim {
+        animation-delay: 0.5s;
+      }
+      .hero .date-line.hero-anim {
+        animation-delay: 0.75s;
+      }
+      .hero .verse.hero-anim {
+        animation-delay: 0.95s;
+      }
+      .hero .vine-bottom.hero-anim {
+        animation-delay: 1.1s;
+      }
+      .scroll-cue.hero-anim {
+        animation-delay: 1.3s;
+      }
+
+      .hero {
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 100px 24px 80px;
+        position: relative;
+      }
+      .hero .frame {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        /* padding: 6px 0; */
+      }
+      .hero-photo {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 28px;
+        border-radius: 50%;
+        /* padding: 6px 0; */
+        border: 1px solid var(--gold);
+      }
+      .hero-photo-inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+        background: var(--bg-soft);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        /* padding: 14px; */
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        color: var(--text-soft);
+        line-height: 1.5;
+      }
+      .hero-photo-inner img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .hero .eyebrow {
+        font-size: 0.72rem;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 22px;
+      }
+      html[lang="ar"] .hero .eyebrow {
+        letter-spacing: 0.12em;
+      }
+      .hero h1 {
+        font-size: clamp(3.4rem, 9vw, 5.8rem);
+        line-height: 1;
+        color: var(--text);
+        white-space: nowrap;
+        text-align: center;
+        width: 100%;
+      }
+      .hero .amp {
+        color: var(--accent);
+        font-style: italic;
+        font-size: 0.5em;
+        margin: 6px 0;
+      }
+      html[lang="ar"] .hero .amp {
+        font-style: normal;
+      }
+      .hero .date-line {
+        margin-top: 28px;
+        font-size: 1rem;
+        letter-spacing: 0.06em;
+        color: var(--text-soft);
+      }
+      .hero .verse {
+        margin-top: 34px;
+        font-size: 1.05rem;
+        color: var(--text-soft);
+        max-width: 480px;
+        margin-inline: auto;
+        line-height: 1.9;
+      }
+      .vine {
+        width: 100%;
+        max-width: 360px;
+        height: auto;
+        margin: 0 auto;
+        display: block;
+        color: var(--gold);
+      }
+      .vine-top {
+        margin-bottom: 10px;
+      }
+      .vine-bottom {
+        margin-top: 18px;
+        transform: scaleY(-1);
+      }
+
+      .scroll-cue {
+        position: absolute;
+        bottom: 34px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.7rem;
+        letter-spacing: 0.3em;
+        color: var(--text-soft);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .scroll-cue span {
+        width: 1px;
+        height: 34px;
+        background: linear-gradient(var(--gold), transparent);
+        animation: pulseLine 2.4s ease-in-out infinite;
+      }
+      @keyframes pulseLine {
+        0%,
+        100% {
+          opacity: 0.25;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      /* ---------- DIVIDER ---------- */
+      .divider {
+        display: flex;
+        justify-content: center;
+        padding: 0 24px;
+      }
+      .divider svg {
+        width: 120px;
+        height: auto;
+        color: var(--gold);
+      }
+
+      /* ---------- SECTION HEADS ---------- */
+      .head {
+        text-align: center;
+        margin-bottom: 56px;
+      }
+      .head .eyebrow {
+        font-size: 0.7rem;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 14px;
+      }
+      html[lang="ar"] .head .eyebrow {
+        letter-spacing: 0.1em;
+      }
+      .head h2 {
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+      }
+
+      /* ---------- COUNTDOWN ---------- */
+      #countdown {
+        background: var(--bg-soft);
+      }
+      .count-grid {
+        display: flex;
+        justify-content: center;
+        gap: clamp(18px, 4vw, 54px);
+        flex-wrap: wrap;
+      }
+      .count-item {
+        text-align: center;
+        min-width: 80px;
+      }
+      .count-item .num {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.2rem, 6vw, 3.4rem);
+        color: var(--accent);
+        line-height: 1;
+      }
+      html[lang="ar"] .count-item .num {
+        font-family: "Aref Ruqaa", serif;
+      }
+      .count-item .lbl {
+        display: block;
+        margin-top: 10px;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+      }
+
+      /* ---------- DETAILS CARDS ---------- */
+      /* .cards{ display:grid; grid-template-columns: 1fr; gap:28px; } */
+      @media (max-width: 720px) {
+        .cards {
+          grid-template-columns: 1fr;
+        }
+      }
+      .cards:has(.card:only-child) {
+        grid-template-columns: 1fr;
+        margin-inline: auto;
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 38px 32px;
+        box-shadow: var(--shadow);
+      }
+      .card .tag {
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+      .card h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.6rem;
+        margin: 10px 0 18px;
+      }
+      html[lang="ar"] .card h3 {
+        font-family: "Aref Ruqaa", serif;
+      }
+      .card p {
+        font-size: 0.92rem;
+        line-height: 1.9;
+        color: var(--text-soft);
+        margin-bottom: 4px;
+      }
+
+      /* address line styled as a card row — same height/look as the rules boxes */
+      .card p.addr {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 14px;
+        padding: 20px 26px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--bg-soft);
+        box-shadow: var(--shadow);
+        font-size: 1.05rem;
+        line-height: 1.7;
+      }
+      .card p.addr::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        flex-shrink: 0;
+      }
+
+      /* map: small, compact rectangle, centered under the address */
+      .map {
+        margin: 20px auto 0;
+        width: 100%;
+        max-width: 240px;
+        aspect-ratio: 3/2;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+        filter: var(--map-filter, none);
+      }
+      html[data-theme="dark"] .map {
+        filter: grayscale(0.3) invert(0.9) contrast(0.85);
+      }
+      .map iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+      .map-link {
+        display: block;
+        text-align: center;
+        margin-top: 12px;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        border-bottom: 1px solid transparent;
+        transition: opacity 0.2s;
+      }
+      .map-link:hover {
+        opacity: 0.7;
+      }
+
+      /* ---------- SCHEDULE ---------- */
+      .timeline {
+        max-width: 520px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .t-item {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        padding: 20px 26px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+      .t-time {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.2rem;
+        color: var(--accent);
+        min-width: 96px;
+        flex-shrink: 0;
+      }
+      html[lang="ar"] .t-time {
+        font-family: "Aref Ruqaa", serif;
+      }
+      .t-label {
+        font-size: 1.05rem;
+        color: var(--text-soft);
+        line-height: 1.7;
+      }
+
+      /* ---------- RULES ---------- */
+      .rules-list {
+        max-width: 480px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .rule-item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 20px 26px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+        font-size: 1.05rem;
+        color: var(--text-soft);
+        line-height: 1.7;
+      }
+      .rule-item::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        flex-shrink: 0;
+      }
+
+      /* ---------- FOOTER ---------- */
+      footer {
+        text-align: center;
+        padding: 70px 24px 50px;
+      }
+      footer .disp {
+        font-size: 1.6rem;
+        color: var(--accent);
+      }
+      footer .sub {
+        margin-top: 10px;
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        color: var(--text-soft);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============ TOP BAR ============ -->
+    <div class="topbar">
+      <div class="brand disp" data-en="R &amp; M" data-ar="R &amp; M">
+        R &amp; M
+      </div>
+      <div class="controls">
+        <button class="ctrl-btn" id="langToggle" type="button">العربية</button>
+        <button
+          class="ctrl-btn"
+          id="themeToggle"
+          type="button"
+          data-en-dark="Dark"
+          data-en-light="Light"
+          data-ar-dark="داكن"
+          data-ar-light="فاتح"
+        >
+          Dark
+        </button>
+      </div>
+    </div>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="frame">
+ 
+
+        <div
+          class="eyebrow hero-anim"
+          data-en="Mrs. Subhi &amp; Mrs. Nizar"
+          data-ar="حرم السيد نزار وحرم السيد صبحي"
+        >
+          Mrs. Sobhi &amp; Mrs. Nizar
+        </div>
+        <h1 class="disp hero-anim">
+          <span data-en="Randa" data-ar="رندة">Randa</span>
+          <span class="amp">&amp;</span>
+          <span data-en="Mohammad" data-ar="محمد">Mohammad</span>
+        </h1>
+               <div class="hero-photo hero-anim">
+          <div class="hero-photo-inner" id="heroPhoto">
+            <img src="./1.jpg" alt="Randa & Mohammad" />
+  
+          </div>
+        </div>
+        <div
+          class="date-line hero-anim"
+          data-en="request the honor of your presence · Wednesday, September 23, 2026"
+          data-ar="نتشرف بحضوركم · الأربعاء، ٢٣ سبتمبر ٢٠٢٦"
+        >
+          request the honor of your presence · Wednesday, September 23, 2026
+        </div>
+
+        <p
+          class="verse hero-anim"
+          data-en="“And of His signs is that He created for you mates from among yourselves, that you may find tranquility in them, and He placed between you affection and mercy.” — Qur’an 30:21"
+          data-ar="﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً﴾ — الروم ٢١"
+        >
+          “And of His signs is that He created for you mates from among
+          yourselves, that you may find tranquility in them, and He placed
+          between you affection and mercy.” — Qur’an 30:21
+        </p>
+
+        <svg
+          class="vine vine-bottom hero-anim"
+          viewBox="0 0 300 40"
+          fill="none"
+        >
+          <path
+            d="M0 20 C 60 0, 90 40, 150 20 S 240 0, 300 20"
+            stroke="currentColor"
+            stroke-width="1"
+          />
+          <circle cx="150" cy="20" r="3" fill="currentColor" />
+        </svg>
+      </div>
+
+      <div class="scroll-cue hero-anim">
+        <span></span>
+        <div data-en="Scroll" data-ar="مرر للأسفل">Scroll</div>
+      </div>
+    </section>
+
+    <div class="divider">
+      <svg viewBox="0 0 120 20" fill="none">
+        <path
+          d="M0 10 H45 M75 10 H120"
+          stroke="currentColor"
+          stroke-width="1"
+        />
+        <circle cx="60" cy="10" r="4" stroke="currentColor" stroke-width="1" />
+      </svg>
+    </div>
+
+    <!-- ============ COUNTDOWN ============ -->
+    <section id="countdown" data-datetime="2026-09-23T18:00:00">
+      <div class="wrap">
+        <div class="head reveal">
+          <div
+            class="eyebrow"
+            data-en="Until we celebrate"
+            data-ar="متبقٍ على الاحتفال"
+          >
+            Until we celebrate
+          </div>
+          <h2 class="disp" data-en="Counting the days" data-ar="نعدّ الأيام">
+            Counting the days
+          </h2>
+        </div>
+        <div class="count-grid reveal">
+          <div class="count-item">
+            <span class="num" id="cd-days">00</span
+            ><span class="lbl" data-en="Days" data-ar="يوم">Days</span>
+          </div>
+          <div class="count-item">
+            <span class="num" id="cd-hours">00</span
+            ><span class="lbl" data-en="Hours" data-ar="ساعة">Hours</span>
+          </div>
+          <div class="count-item">
+            <span class="num" id="cd-mins">00</span
+            ><span class="lbl" data-en="Minutes" data-ar="دقيقة">Minutes</span>
+          </div>
+          <div class="count-item">
+            <span class="num" id="cd-secs">00</span
+            ><span class="lbl" data-en="Seconds" data-ar="ثانية">Seconds</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EVENT DETAILS ============ -->
+    <section id="details">
+      <div class="wrap">
+        <div class="head reveal">
+          <div class="eyebrow" data-en="Join us" data-ar="نتشرف بحضوركم">
+            Join us
+          </div>
+          <h2 class="disp" data-en="The Celebration" data-ar="تفاصيل الحفل">
+            The Celebration
+          </h2>
+        </div>
+        <div class="cards">
+          <div class="card reveal">
+            <div class="tag" data-en="Wedding" data-ar="موعد العرس">
+              Wedding
+            </div>
+            <h3
+              class="disp"
+              data-en="Yildiz Palace Hall"
+              data-ar="قاعة قصر يلدز"
+            >
+              Yildiz Palace Hall
+            </h3>
+            <p
+              data-en="Wednesday, September 23, 2026"
+              data-ar="الأربعاء، ٢٣ سبتمبر ٢٠٢٦"
+            >
+              Wednesday, Se ptember 23, 2026
+            </p>
+            <p data-en="7:00 PM" data-ar="الساعة ٧:٠٠ مساءً">7:00 PM</p>
+            <p
+              class="addr"
+              data-en="In Hamdaniya, behind the oven"
+              data-ar="في الحمدانية، خلف الفرن"
+            >
+              In Hamdaniya, behind the oven
+            </p>
+            <div class="map" data-address="Yildiz Palace Hall, Hamdaniya"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider">
+      <svg viewBox="0 0 120 20" fill="none">
+        <path
+          d="M0 10 H45 M75 10 H120"
+          stroke="currentColor"
+          stroke-width="1"
+        />
+        <circle cx="60" cy="10" r="4" stroke="currentColor" stroke-width="1" />
+      </svg>
+    </div>
+
+    <!-- ============ SCHEDULE ============ -->
+    <section id="schedule">
+      <div class="wrap">
+        <div class="head reveal">
+          <div
+            class="eyebrow"
+            data-en="Order of the evening"
+            data-ar="برنامج المساء"
+          >
+            Order of the evening
+          </div>
+          <h2 class="disp" data-en="Schedule" data-ar="الجدول الزمني">
+            Schedule
+          </h2>
+        </div>
+        <div class="timeline reveal">
+          <div class="t-item">
+            <div class="t-time" data-en="7:00 PM" data-ar="٧:٠٠ م">7:00 PM</div>
+            <div
+              class="t-label"
+              data-en="Guest arrival"
+              data-ar="استقبال الضيوف"
+            >
+              Guest arrival
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider">
+      <svg viewBox="0 0 120 20" fill="none">
+        <path
+          d="M0 10 H45 M75 10 H120"
+          stroke="currentColor"
+          stroke-width="1"
+        />
+        <circle cx="60" cy="10" r="4" stroke="currentColor" stroke-width="1" />
+      </svg>
+    </div>
+
+    <!-- ============ HALL RULES ============ -->
+    <section id="rules">
+      <div class="wrap">
+        <div class="head reveal">
+          <div class="eyebrow" data-en="Please note" data-ar="يرجى الانتباه">
+            Please note
+          </div>
+          <h2 class="disp" data-en="Hall Guidelines" data-ar="قواعد الصالة">
+            Hall Guidelines
+          </h2>
+        </div>
+        <div class="rules-list reveal">
+          <div
+            class="rule-item"
+            data-en="Children are strictly not permitted"
+            data-ar="يُمنع اصطحاب الأطفال منعًا باتًا"
+          >
+            Children are strictly not permitted
+          </div>
+          <div
+            class="rule-item"
+            data-en="Photography is not permitted"
+            data-ar="يُمنع التصوير"
+          >
+            Photography is not permitted
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+      <div class="disp" data-en="Randa &amp; Mohammad" data-ar="رندة و محمد">
+        Randa &amp; Mohammad
+      </div>
+      <div class="sub" data-en="September 23, 2026" data-ar="٢٣ سبتمبر ٢٠٢٦">
+        September 23, 2026
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var langBtn = document.getElementById("langToggle");
+        var themeBtn = document.getElementById("themeToggle");
+        var currentLang = "en";
+        var currentTheme = window.matchMedia("(prefers-color-scheme: dark)")
+          .matches
+          ? "dark"
+          : "light";
+
+        function applyLang(lang) {
+          currentLang = lang;
+          root.setAttribute("lang", lang);
+          root.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+          document.querySelectorAll("[data-en]").forEach(function (el) {
+            var val = el.getAttribute(lang === "ar" ? "data-ar" : "data-en");
+            if (val !== null) el.innerHTML = val;
+          });
+          langBtn.textContent = lang === "ar" ? "English" : "العربية";
+          applyThemeLabel();
+        }
+
+        function applyThemeLabel() {
+          var key = currentTheme === "dark" ? "dark" : "light";
+          var label =
+            currentLang === "ar"
+              ? themeBtn.getAttribute("data-ar-" + key)
+              : themeBtn.getAttribute("data-en-" + key);
+          themeBtn.textContent = label;
+        }
+
+        function applyTheme(theme) {
+          currentTheme = theme;
+          root.setAttribute("data-theme", theme);
+          applyThemeLabel();
+        }
+
+        langBtn.addEventListener("click", function () {
+          applyLang(currentLang === "ar" ? "en" : "ar");
+        });
+        themeBtn.addEventListener("click", function () {
+          applyTheme(currentTheme === "dark" ? "light" : "dark");
+        });
+
+        applyLang("en");
+        applyTheme(currentTheme);
+
+        // ---------- Countdown ----------
+        var cdSection = document.getElementById("countdown");
+        var target = new Date(
+          cdSection.getAttribute("data-datetime"),
+        ).getTime();
+        var elD = document.getElementById("cd-days");
+        var elH = document.getElementById("cd-hours");
+        var elM = document.getElementById("cd-mins");
+        var elS = document.getElementById("cd-secs");
+
+        function pad(n) {
+          return String(n).padStart(2, "0");
+        }
+        function tick() {
+          var diff = target - Date.now();
+          if (diff < 0) diff = 0;
+          var days = Math.floor(diff / 86400000);
+          var hours = Math.floor((diff % 86400000) / 3600000);
+          var mins = Math.floor((diff % 3600000) / 60000);
+          var secs = Math.floor((diff % 60000) / 1000);
+          elD.textContent = pad(days);
+          elH.textContent = pad(hours);
+          elM.textContent = pad(mins);
+          elS.textContent = pad(secs);
+        }
+        tick();
+        setInterval(tick, 1000);
+
+        // ---------- Maps + "Get directions" link ----------
+        // كلاهما يُبنى تلقائيًا من data-address في .map — عدّلوا العنوان هناك فقط
+        // Both are built automatically from data-address on .map — edit the address there only
+        document.querySelectorAll(".map").forEach(function (box) {
+          var addr = box.getAttribute("data-address");
+
+          var iframe = document.createElement("iframe");
+          iframe.loading = "lazy";
+          iframe.referrerPolicy = "no-referrer-when-downgrade";
+          iframe.src =
+            "https://www.google.com/maps?q=" +
+            encodeURIComponent(addr) +
+            "&output=embed";
+          box.appendChild(iframe);
+
+          var link = document.createElement("a");
+          link.className = "map-link";
+          link.href =
+            "https://maps.app.goo.gl/32QER9kryMAoVpj36" +
+            encodeURIComponent(addr);
+          link.target = "_blank";
+          link.rel = "noopener";
+          link.setAttribute("data-en", "Get directions");
+          link.setAttribute("data-ar", "احصلوا على الاتجاهات");
+          link.textContent =
+            currentLang === "ar" ? "احصلوا على الاتجاهات" : "Get directions";
+          box.insertAdjacentElement("afterend", link);
+        });
+
+        // ---------- Reveal on scroll ----------
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (en) {
+              if (en.isIntersecting) {
+                en.target.classList.add("in");
+                io.unobserve(en.target);
+              }
+            });
+          },
+          { threshold: 0.15 },
+        );
+        document.querySelectorAll(".reveal").forEach(function (el) {
+          io.observe(el);
+        });
+      })();
+    </script>
+  </body>
+</html>
